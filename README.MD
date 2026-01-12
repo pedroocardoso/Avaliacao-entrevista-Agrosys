@@ -1,0 +1,1 @@
+Este foi um desafio proposto pela empresa Agrosys para entrevista e consiste no desenvolvimento de uma mini aplicação Web voltada para o cadastro e gerenciamento de clientes e seus respectivos endereços, com foco em simplicidade, funcionalidade e execução totalmente local, sem dependências de servidor backend.
