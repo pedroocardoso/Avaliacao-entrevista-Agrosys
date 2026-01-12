@@ -1,5 +1,5 @@
 - Projeto front-end simples para cadastro e consulta de clientes e seus endereços, rodando 100% no navegador, sem backend.
-- Para executar: abra a pasta `project-root` e dê duplo clique em `index.html`. Não é necessário instalar nada ou subir servidor.
+- Para executar: dê duplo clique em `index.html`. Não é necessário instalar nada ou subir servidor.
 - Ao abrir, use a tela de login e clique em “Criar Novo Usuário”, cadastre um login e senha e depois entre normalmente.
 - Na aba “Clientes” é possível listar, criar, editar e excluir clientes, além de buscar por nome, CPF, e-mail ou telefone. O CPF é validado e não pode ser duplicado.
 - Na aba “Endereços” selecione um cliente para visualizar, cadastrar, editar ou excluir endereços. É possível marcar um único endereço como “principal” por cliente.
