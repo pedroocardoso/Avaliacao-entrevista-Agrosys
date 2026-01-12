@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Clientes e Endereços - Agrosys</title>
+    <link rel="icon" type="image/x-icon" href="https://files.bewezy.com/849f3916a152d21ec6fbf2caacff1c8a/26102023164803000000591784.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div id="login-screen" class="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+        <div class="card" style="width: 100%; max-width: 400px;">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <img src="assets/img/agrosys-logo.svg" alt="Agrosys" style="max-width: 200px; height: auto;">
+                </div>
+                <h5 class="text-center text-white mb-4">Sistema de Cadastro</h5>
+                
+                <form id="login-form">
+                    <div class="mb-3">
+                        <label for="login-username" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" id="login-username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="login-password" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="login-password" required>
+                    </div>
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </div>
+                </form>
+                
+                <div class="w-100 mt-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center gap-1" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                        <span class="material-icons" style="font-size: 18px;">person_add</span> Criar Novo Usuário
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm d-flex align-items-center justify-content-center gap-1"  data-bs-toggle="modal" data-bs-target="#configModal">
+                        <span class="material-icons" style="font-size: 18px;">settings</span> Configurações
+                    </button>
+                </div>
+                
+                <div id="login-message" class="alert d-none mt-3" role="alert"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-screen" class="d-none">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-agrosys">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/agrosys-logo.svg" alt="Agrosys" style="height: 30px; width: auto;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-clients">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-addresses">Endereços</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item  d-flex align-items-center justify-content-center gap-1">
+                            <button class="btn btn-outline-light btn-sm btn-nav-action" id="btn-import-db-nav" data-bs-toggle="modal" data-bs-target="#configModal">
+                                <span class="material-icons" style="font-size: 16px; vertical-align: middle;">upload</span> Importar Banco
+                            </button>
+                        </li>
+                        <li class="nav-item  d-flex align-items-center justify-content-center gap-1">
+                            <button class="btn btn-outline-light btn-sm btn-nav-action" id="btn-export-db">
+                                <span class="material-icons" style="font-size: 16px; vertical-align: middle;">download</span> Exportar Banco
+                            </button>
+                        </li>
+                        <li class="nav-item d-flex align-items-center justify-content-center gap-1">
+                            <button class="btn btn-danger btn-sm d-flex align-items-center justify-content-center gap-1 btn-nav-action" id="btn-logout">
+                                <span class="material-icons" style="font-size: 16px;">exit_to_app</span> Sair
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <div id="app" class="container-fluid mt-4">
+            <!-- Conteúdo inserido via JavaScript -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="createUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Criar Novo Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="create-user-form">
+                        <div class="mb-3">
+                            <label for="new-username" class="form-label">Usuário</label>
+                            <input type="text" class="form-control" id="new-username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="new-password" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="new-password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Confirmar Senha</label>
+                            <input type="password" class="form-control" id="confirm-password" required>
+                        </div>
+                        <div id="create-user-message" class="alert d-none" role="alert"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-create-user">Criar Usuário</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="configModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Configurações</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="mb-3">Importar Banco de Dados</h6>
+                    <p class="text-muted small mb-3">Selecione um arquivo JSON para importar dados pré-populados.</p>
+                    <div class="mb-3">
+                        <label for="db-file-input" class="form-label">Arquivo JSON</label>
+                        <input type="file" class="form-control" id="db-file-input" accept=".json">
+                    </div>
+                    <div id="config-message" class="alert d-none" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="btn-import-db">Importar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="clientModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="client-modal-title">Novo Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="client-form">
+                        <input type="hidden" id="client-id" value="">
+                        <div class="mb-3">
+                            <label for="client-name" class="form-label">Nome <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="client-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="client-cpf" class="form-label">CPF <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="client-cpf" placeholder="000.000.000-00" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="client-email" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="client-email" placeholder="exemplo@email.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="client-phone" class="form-label">Telefone</label>
+                            <input type="text" class="form-control" id="client-phone" placeholder="(00) 00000-0000">
+                        </div>
+                        <div id="client-message" class="alert d-none" role="alert"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-client">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addressModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="address-modal-title">Novo Endereço</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="address-form">
+                        <input type="hidden" id="address-id" value="">
+                        <input type="hidden" id="address-client-id" value="">
+
+                        <div class="mb-2">
+                            <small class="text-muted">
+                                Cliente: <span id="address-client-name" class="fw-semibold">Não selecionado</span>
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address-street" class="form-label">Logradouro (Rua) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="address-street" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="address-number" class="form-label">Número <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address-number" required>
+                            </div>
+                            <div class="col-md-8 mb-3">
+                                <label for="address-complement" class="form-label">Complemento</label>
+                                <input type="text" class="form-control" id="address-complement">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address-neighborhood" class="form-label">Bairro <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="address-neighborhood" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="address-city" class="form-label">Cidade <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address-city" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="address-state" class="form-label">UF <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address-state" maxlength="2" placeholder="EX" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="address-zipcode" class="form-label">CEP <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address-zipcode" placeholder="00000-000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="address-is-primary">
+                            <label class="form-check-label" for="address-is-primary">
+                                Definir como endereço principal
+                            </label>
+                        </div>
+
+                        <div id="address-message" class="alert d-none" role="alert"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-address">Salvar Endereço</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="clientDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="client-details-content">
+                        <!-- Conteúdo inserido via JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addressDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Endereço</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="address-details-content">
+                        <!-- Conteúdo inserido via JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="client-actions-menu" class="client-actions-menu hidden"></div>
+    <div id="address-actions-menu" class="address-actions-menu hidden"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
+    
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/clients.js"></script>
+    <script src="assets/js/addresses.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
